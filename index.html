@@ -326,8 +326,8 @@
         function nextlevel(level)
         {
             
-            div = document.createElement('div');
-            div.setAttribute('class','level');
+            div3 = document.createElement('div');
+            div3.setAttribute('class','level');
 
             var navBar = document.createElement('nav');
             navBar.setAttribute('style','background-color:lightblue;height:30px;');
@@ -425,12 +425,12 @@
             table.append(thead,tbody);
             levelcontainer.appendChild(table);
 
-            div.append(navBar,levelcontainer);
+            div3.append(navBar,levelcontainer);
             
            
             let oldDiv = document.getElementsByClassName('level')[0];
-            div.parentNode.replaceChild(div, oldDiv);
-            div.onload=fixcolorcircle();
+            div2.parentNode.replaceChild(div3, oldDiv);
+            div3.onload=fixcolorcircle();
             //sampleStopFunction();
         }
 
