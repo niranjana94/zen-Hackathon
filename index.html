@@ -6,75 +6,115 @@
     <title>PAINT ME RIGHT</title>
     <style>
         .container {
-           
+
             width: 800px;
-            height: 600px;
+            height: 400px;
         }
-        .background {            
+
+        .background {
             width: 800px;
-            height: 550px;
+            height: 400px;
             position: absolute;
             text-align: center;
-            background-image: url(startgame.jpg);
-            }
-        .level{
+            background-image: url(background_2.jpg);
+        }
+
+        .level {
             padding: 20px;
-            border:1px solid black;             
-            width: 800px;
-            height: 600px;  
-            text-align: center;     
+            border: 1px solid black;
+            width: 750px;
+            height: 400px;
+            text-align: center;
 
         }
-        .circle {    
-            border: 1px solid black;        
+
+        .circle {
+            border: 1px solid black;
             width: 100px;
             height: 100px;
-            border-radius: 1000px; 
+            border-radius: 1000px;
             margin: 0.5em;
-                      
-            }
+
+        }
+
         #circlecontainer {
             display: flex;
             justify-content: center;
             align-content: flex-start;
             -webkit-flex-flow: row wrap;
             flex-flow: row wrap;
-            box-sizing:border-box;
+            box-sizing: border-box;
             height: 150px;
-            width: 600px;
-        } 
-        .color {            
+            width: 650px;
+        }
+
+        .color {
             width: 50px;
-            height: 30px;             
-            display:flex;
-            flex-wrap:wrap;
-            flex-direction:row;                      
-        } 
-        #colorcontainer{
+            height: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+
+        #colorcontainer {
             flex: 0 25%;
             display: flex;
             justify-content: center;
             align-content: flex-start;
             -webkit-flex-flow: row wrap;
             flex-flow: row wrap;
-            box-sizing:border-box;
-            height:100px;
+            box-sizing: border-box;
+            height: 100px;
             width: 600px;
         }
-        .scrlevel{
-            padding: 20px;
-            border:1px solid black;             
-            width: 650px;
-            height: 400px; 
-            text-align: center;      
 
-        }  
+        .scrlevel {
+            padding: 20px;
+            border: 1px solid black;
+            width: 650px;
+            height: 300px;
+            text-align: center;
+
+        }
+
         .selectable {
             cursor: pointer;
         }
 
-      
-        
+        .modal {
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+        }
+
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -84,90 +124,101 @@
         container.classList.add('container');
 
         var head = document.createElement('h2');
-        head.setAttribute('style','padding: 30px;height:20px;font-size: 35px;text-align: center;color: #00688B;background-color:#D1EEEE;border:1px solid black;');
-        head.innerText ='PAINT ME RIGHT';        
+        head.setAttribute('style', 'padding: 30px;height:20px;font-size: 35px;text-align: center;color: white;background-color:#0E71E0;border:1px solid black;');
+        head.innerText = 'PAINT ME RIGHT';
+
+        
 
         var div1 = document.createElement('div');
-        div1.setAttribute('class','background');
+        div1.setAttribute('class', 'background');
+
+        var instdiv =  document.createElement('div');
+        var inst = document.createElement('button');
+        inst.id='inst';
+        inst.innerText='Instrutions';
+        inst.setAttribute('onclick','instructions()');
+
+        instdiv.append(inst);
+        
         var button = document.createElement('button');
-        button.setAttribute('style','border-radius: 50%;height:150px;width:150px;border: none;color:#009ACD; background-color:#D1EEEE; font-size: 16px;')
-        button.setAttribute('onclick','start()');
-        button.innerText='START GAME';    
+        button.setAttribute('style', 'border-radius: 50%;height:150px;width:150px;position:absolute;top:100px;left:300px;border: none;color:white; background-color:#0E71E0; font-size: 16px;')
+        button.setAttribute('onclick', 'start()');
+        button.innerText = 'START GAME';
 
-        div1.append(button);  
+        div1.append(instdiv,button);
 
-        container.append(head,div1);
+        container.append(head, instdiv,div1);
 
         document.body.append(container);
-   
-        var levelcontainer,div2;
 
-        function load()
-        {
+        var levelcontainer, div2;
+
+        function load(level) {
             div2 = document.createElement('div');
             div2.classList.add('level');
 
             var navBar = document.createElement('nav');
-            navBar.setAttribute('style','background-color:lightblue;height:25px;');
-            var home = document.createElement('button');        
-            home.setAttribute('onclick','home()');
-            home.setAttribute('style','float:right');
-            home.innerText='Home';
-            var newgame = document.createElement('button');        
-            newgame.setAttribute('onclick','newgame()');
-            newgame.setAttribute('style','float:left');
-            newgame.innerText='New Game';
+            navBar.setAttribute('style', 'background-color:lightblue;height:25px;');
+            var home = document.createElement('button');
+            home.setAttribute('onclick', 'home()');
+            home.setAttribute('style', 'float:right');
+            home.innerText = 'Home';
+            var newgame = document.createElement('button');
+            newgame.setAttribute('onclick', 'newgame()');
+            newgame.setAttribute('style', 'float:left');
+            newgame.innerText = 'New Game';
 
-            navBar.append(home,newgame);         
+            navBar.append(home, newgame);
 
             levelcontainer = document.createElement('div');
-            levelcontainer.setAttribute('class','leveldiv') ; 
-            levelcontainer.id = 'levdiv';          
-            var table = document.createElement('table');  
+            levelcontainer.setAttribute('class', 'leveldiv');
+            levelcontainer.id = 'levdiv';
+            var table = document.createElement('table');
             var thead = document.createElement('thead');
-            var tr = document.createElement('tr');  
-            var td1 = document.createElement('td');          
+            var tr = document.createElement('tr');
+            var td1 = document.createElement('td');
             var th1 = levelheader(level);
-            th1.setAttribute('style','text-align:center;');
-            var td2 = document.createElement('td');   
+            th1.id = 'levelheader';
+            th1.setAttribute('style', 'text-align:center;');
+            var td2 = document.createElement('td');
             var th2 = lifeline();
-            th2.setAttribute('style','text-align:right;');
+            th2.setAttribute('style', 'text-align:right;');
 
             td1.append(th1);
             td2.append(th2);
-            tr.append(td1,td2);
-            thead.append(tr);             
-            
+            tr.append(td1, td2);
+            thead.append(tr);
+
             var tbody = document.createElement('tbody');
-            tbody.setAttribute('id','game');
-            
-            var tr1 = document.createElement('tr');            
+            tbody.setAttribute('id', 'game');
+
+            var tr1 = document.createElement('tr');
             var divcircle = document.createElement('div');
             divcircle.id = 'circlecontainer';
             var circle1 = document.createElement('button');
-            circle1.classList.add('circle','selectable');
-            circle1.id ='circle1';
-            circle1.innerText='';
-            circle1.setAttribute('onclick',"fillcircle(circle1.id);");
+            circle1.classList.add('circle', 'selectable');
+            circle1.id = 'circle1';
+            circle1.innerText = '';
+            circle1.setAttribute('onclick', "fillcircle(circle1.id);");
             var circle2 = document.createElement('button');
-            circle2.classList.add('circle','selectable');
-            circle2.id ='circle2';
-            circle2.innerText='';
-            circle2.setAttribute('onclick',"fillcircle(circle2.id);");
+            circle2.classList.add('circle', 'selectable');
+            circle2.id = 'circle2';
+            circle2.innerText = '';
+            circle2.setAttribute('onclick', "fillcircle(circle2.id);");
             var circle3 = document.createElement('button');
-            circle3.classList.add('circle','selectable');
-            circle3.id ='circle3';
-            circle3.innerText='';
-            circle3.setAttribute('onclick',"fillcircle(circle3.id);");
+            circle3.classList.add('circle', 'selectable');
+            circle3.id = 'circle3';
+            circle3.innerText = '';
+            circle3.setAttribute('onclick', "fillcircle(circle3.id);");
             var circle4 = document.createElement('button');
-            circle4.classList.add('circle','selectable');
-            circle4.id ='circle4';
-            circle4.innerText='';
-            circle4.setAttribute('onclick',"fillcircle(circle4.id);");
-            divcircle.append(circle1,circle2,circle3,circle4);
-            tr1.append(divcircle);            
+            circle4.classList.add('circle', 'selectable');
+            circle4.id = 'circle4';
+            circle4.innerText = '';
+            circle4.setAttribute('onclick', "fillcircle(circle4.id);");
+            divcircle.append(circle1, circle2, circle3, circle4);
+            tr1.append(divcircle);
 
-            var tr2 = document.createElement('tr');            
+            var tr2 = document.createElement('tr');
             var divcolor = document.createElement('div');
             divcolor.id = 'colorcontainer';
             var color1 = createcolor('red');
@@ -175,349 +226,249 @@
             var color3 = createcolor('lightskyblue');
             var color4 = createcolor('purple');
             var color5 = createcolor('lightgreen');
-            var color6 = createcolor('orangered');   
-             color1.setAttribute('onclick',"fillcolor('red');");
-             color2.setAttribute('onclick',"fillcolor('green');");
-             color3.setAttribute('onclick',"fillcolor('lightskyblue');");
-             color4.setAttribute('onclick',"fillcolor('purple');");
-             color5.setAttribute('onclick',"fillcolor('lightgreen');");
-             color6.setAttribute('onclick',"fillcolor('orangered');");       
-            
-            divcolor.append(color1,color2,color3,color4,color5,color6);
-            tr2.append(divcolor); 
+            var color6 = createcolor('orangered');
+            color1.setAttribute('onclick', "fillcolor('red');");
+            color2.setAttribute('onclick', "fillcolor('green');");
+            color3.setAttribute('onclick', "fillcolor('lightskyblue');");
+            color4.setAttribute('onclick', "fillcolor('purple');");
+            color5.setAttribute('onclick', "fillcolor('lightgreen');");
+            color6.setAttribute('onclick', "fillcolor('orangered');");
 
-            var tr3 = document.createElement('tr'); 
-            tr3.setAttribute('style','text-align:center;')
+            divcolor.append(color1, color2, color3, color4, color5, color6);
+            tr2.append(divcolor);
+
+            var tr3 = document.createElement('tr');
+            tr3.setAttribute('style', 'text-align:center;')
             var button = document.createElement('button');
-            button.setAttribute('style','height:20px;width:70px;font-size:30px;border: none;color:white; background-color:#FF6347; font-size: 8px;border-radius:10px')
-            button.setAttribute('onclick','check()');
-            button.innerText='Check'; 
+            button.setAttribute('style', 'height:20px;width:70px;font-size:30px;border: none;color:white; background-color:#FF6347; font-size: 8px;border-radius:10px')
+            button.setAttribute('onclick', 'check()');
+            button.innerText = 'Check';
+            button.id = 'check';
             tr3.append(button);
 
-            tbody.append(tr1,tr2,tr3);
+            tbody.append(tr1, tr2, tr3);
 
-            table.append(thead,tbody);
+            table.append(thead, tbody);
             levelcontainer.appendChild(table);
 
-            div2.append(navBar,levelcontainer);
+            div2.append(navBar, levelcontainer);
 
         }
-        function newgame()
-        {
+        function newgame() {
             let oldDiv = document.getElementsByClassName('level')[0];
             div2.parentNode.replaceChild(div1, oldDiv);
-            //start();
-        }
-        function home()
-        {
-            let oldDiv = document.getElementsByClassName('level')[0];
-            div2.parentNode.replaceChild(div1, oldDiv);
-        }
-        function start(){
 
-            
-            load();
+        }
+        function home() {
+            let oldDiv = document.getElementsByClassName('level')[0];
+            div2.parentNode.replaceChild(div1, oldDiv);
+        }
+        function start() {
+            level =1;
+            load(level);
             let oldDiv = document.getElementsByClassName('background')[0];
             div1.parentNode.replaceChild(div2, oldDiv);
-            div2.onload=fixcolorcircle();
-            //sampleStopFunction();
-           
-            
+            div2.onload = fixcolorcircle(level);
+
         }
-        
-        function levelheader(num)
-        {
+
+        function levelheader(level) {
             var th1 = document.createElement('th');
-            th1.innerText='Level'+num;
+            th1.innerText = 'Level' + level;
             return th1;
         }
 
-        var life1,life2,life3;
-        function lifeline()
-        {
+        var life1, life2, life3;
+        function lifeline() {
             var th = document.createElement('th');
             var script = document.createElement('script');
-            script.setAttribute('src','https://kit.fontawesome.com/a076d05399.js');
+            script.setAttribute('src', 'https://kit.fontawesome.com/a076d05399.js');
             life1 = document.createElement('i');
-            life1.setAttribute('class','fas fa-heart');
-            life1.setAttribute('style','font-size: 15px;color:red');
+            life1.setAttribute('class', 'fas fa-heart');
+            life1.setAttribute('style', 'font-size: 15px;color:red');
+            life1.id = 'life1';
             life2 = document.createElement('i');
-            life2.setAttribute('class','fas fa-heart');
-            life2.setAttribute('style','font-size: 15px;color:red');
+            life2.setAttribute('class', 'fas fa-heart');
+            life2.setAttribute('style', 'font-size: 15px;color:red');
+            life2.id = 'life2';
             life3 = document.createElement('i');
-            life3.setAttribute('class','fas fa-heart');
-            life3.setAttribute('style','font-size: 15px;color:red');
-            th.append(script,life1,life2,life3);
+            life3.setAttribute('class', 'fas fa-heart');
+            life3.setAttribute('style', 'font-size: 15px;color:red');
+            life3.id = 'life3';
+            th.append(script, life1, life2, life3);
             return th;
         }
 
         var colorarr = {};
         var circle_1;
-        var settime = {'1':'5000','2':'4500','3':'4000','4':'3500','5':'3000','6':'2500','7':'2000','8':'1500','9':'1000'}
-        function fixcolorcircle(){
-                
-                
-                var c = new Array("red", "green","lightskyblue", "purple", "lightgreen","orangered");
-            // var index = 0;
-                for(var index = 0;index<document.getElementsByClassName('circle').length;)
-                {
-                circle_1 = document.getElementsByClassName('circle');
-                circle_1[index].style.backgroundColor = c[index];
-                key = circle_1[index].id;
-                colorarr[key] = c[index];
-                index = (index+1)%c.length;
-                
-                }
-                localStorage.setItem('selectedcolor',JSON.stringify(colorarr));
-                setTimeout(function(){
-                    for(var index = 0;index<document.getElementsByClassName('circle').length;)
-                {
-                circle_1 = document.getElementsByClassName('circle');
-                circle_1[index].style.backgroundColor = "";
-                //localStorage.setItem(circle_1[index],c[index]); 
-                index = (index+1)%c.length;
-                
-                }
-                },settime[level]);  
-                
-                
-        }
         var level = 1;
-        var count =0;
-        function check()
-        {
-            
+        var count = 0;
+        var settime = { '1': '5000', '2': '4500', '3': '4000', '4': '3500', '5': '3000', '6': '2500', '7': '2000', '8': '1500', '9': '1000' }
+
+        function fixcolorcircle(level) {
+
+            var c = new Array("red", "green", "lightskyblue", "purple", "lightgreen", "orangered");
+            document.getElementById('levelheader').innerText = 'level ' + level;
+
+            for (var index = 0; index < document.getElementsByClassName('circle').length;) {
+                circle_1 = document.getElementsByClassName('circle');
+                circle_1[index].style.backgroundColor = c[Math.floor(Math.random() * c.length)];
+                //circle_1[index].style.backgroundColor = c[index];
+                key = circle_1[index].id;
+                colorarr[key] = circle_1[index].style.backgroundColor;
+                index = (index + 1) % c.length;
+
+            }
+            localStorage.setItem('selectedcolor', JSON.stringify(colorarr));
+            setTimeout(function () {
+                for (var index = 0; index < document.getElementsByClassName('circle').length;) {
+                    circle_1 = document.getElementsByClassName('circle');
+                    circle_1[index].style.backgroundColor = "";
+                    //localStorage.setItem(circle_1[index],c[index]); 
+                    index = (index + 1) % c.length;
+
+                }
+            }, settime[level]);
+
+
+        }
+        function tryagain() {
+            let oldDiv = document.getElementsByClassName('level')[0];
+            div2.parentNode.replaceChild(div1, oldDiv);
+        }
+
+        var status;
+        function check() {
+
             var storage = JSON.parse(localStorage.getItem('selectedcolor'));
-            if(newclickcolor['circle1'] === storage['circle1'] && newclickcolor['circle2'] === storage['circle2'] && newclickcolor['circle3'] === storage['circle3'] && newclickcolor['circle4'] === storage['circle4'])
-            {   
-            level++;        
+            if (newclickcolor['circle1'] === storage['circle1'] && newclickcolor['circle2'] === storage['circle2'] && newclickcolor['circle3'] === storage['circle3'] && newclickcolor['circle4'] === storage['circle4']) {
+                level++;
+                alert('Congrats you have completed this level');
+                fixcolorcircle(level);
+                              
+            }
+            else {
+                count++;
+                if (count > 3) {
+                    alert('Game Over');                   
+                    count = 0;
+                    status =0;
+                    scorepanel(status);
+
+
+                }
+                else {
+
+                    alert('Please Try again');
+                    if (document.getElementById('life1').style.display != 'none') {
+                        document.getElementById('life1').style.display = 'none';
+                    }
+                    else {
+                        if (document.getElementById('life1').style.display == 'none' && document.getElementById('life2').style.display == 'none')
+                            document.getElementById('life3').style.display = 'none';
+                        else {
+                            document.getElementById('life2').style.display = 'none';
+                        }
+
+                    }
+
+                }
+            }
+        }
+        function instructions(){
+            var modaldiv = document.createElement('div');
+            modaldiv.id='myModal';
+            modaldiv.classList.add('modal');
+            var moddiv = document.createElement('div');
+            moddiv.classList.add('modal-content');
+
+            var closespan = document.createElement('span');
+            closespan.classList.add('close');
+            closespan.innerHTML ='&times;';
+
+            var info = document.createElement('p');
+            info.innerHTML='<h3><b>Instructions</b></h3><p>1.Random colors will be displayed in circles and disappear.<br>2.Player should pick right color by clicking circle and color n color palette.<br>3.Player gets 3 lifeline.</p>';
+            moddiv.append(closespan,info);
+            modaldiv.append(moddiv);  
+            document.body.append(modaldiv);
+            var modal = document.getElementById("myModal");
+            var btn = document.getElementById("inst");
+            var span = document.getElementsByClassName("close")[0];
+            
+            btn.onclick=function(){
+                modal.style.display = "block";
+            }
+
+            span.onclick = function(){
+            modal.style.display = "none";            
+            }
+            window.onclick = function(event) {
+            if (event.target == modal || event.target == span) {
+            modal.style.display = "none";
+            }
+            }   
+        }
+
+        function scorepanel(status) {
             var scorediv = document.createElement('div');
             scorediv.classList.add('scrlevel');
             var label = document.createElement('label');
-            label.innerText = 'score '+ checkscore(level,4) ;
+            label.innerText = 'score ' + checkscore(level - 1, status);
             label.style.fontSize = '40px';
             var div = document.createElement('div');
             var button = document.createElement('button');
-            button.setAttribute('onclick','nextlevel(level)');
-            button.innerText='Next Level';
-            button.setAttribute('style','margin-top:50px; height:80px;width:100px;font-size:50px;border: none;color:white; background-color:#FF6347; font-size: 15px;border-radius:10px;');
+            button.setAttribute('onclick', 'tryagain()');
+            button.innerText = 'Try Again';
+            button.setAttribute('style', 'margin-top:50px; height:80px;width:100px;font-size:50px;border: none;color:white; background-color:#FF6347; font-size: 15px;border-radius:10px;');
             div.append(button);
-            scorediv.append(label,div);
+            scorediv.append(label, div);
             let oldDiv = document.getElementsByClassName('leveldiv')[0];
-            levelcontainer.parentNode.replaceChild(scorediv, oldDiv); 
-            }
-            else
-            {
-                count++;     
-                if(count>3)
-                {
-                    alert('Game Over');
-                } 
-                else
-                {    
-                
-                alert('Please Try again');
-                }
-
-            }
-
+            levelcontainer.parentNode.replaceChild(scorediv, oldDiv);
         }
 
-        function nextlevel(level)
-        {
-            
-            div3 = document.createElement('div');
-            div3.setAttribute('class','level');
-
-            var navBar = document.createElement('nav');
-            navBar.setAttribute('style','background-color:lightblue;height:30px;');
-            var home = document.createElement('button');        
-            home.setAttribute('onclick','home()');
-            home.setAttribute('style','float:right');
-            home.innerText='Home';
-            var newgame = document.createElement('button');        
-            newgame.setAttribute('onclick','newgame()');
-            newgame.setAttribute('style','float:left');
-            newgame.innerText='New Game';
-
-            navBar.append(home,newgame);         
-
-             levelcontainer = document.createElement('div');
-            levelcontainer.setAttribute('class','leveldiv') ; 
-            levelcontainer.id = 'levdiv';          
-            var table = document.createElement('table');  
-            var thead = document.createElement('thead');
-            var tr = document.createElement('tr');  
-            var td1 = document.createElement('td');          
-            var th1 = levelheader(level);
-            th1.setAttribute('style','text-align:center;');
-            var td2 = document.createElement('td');   
-            var th2 = lifeline();
-            th2.setAttribute('style','text-align:right;');
-
-            td1.append(th1);
-            td2.append(th2);
-            tr.append(td1,td2);
-            thead.append(tr);             
-            
-            var tbody = document.createElement('tbody');
-            tbody.setAttribute('id','game');
-            
-            var tr1 = document.createElement('tr');            
-            var divcircle = document.createElement('div');
-            divcircle.id = 'circlecontainer';
-            var circle1 = document.createElement('button');
-            circle1.classList.add('circle','selectable');
-            circle1.id ='circle1';
-            circle1.innerText='';
-            circle1.setAttribute('onclick',"fillcircle(circle1.id);");
-            var circle2 = document.createElement('button');
-            circle2.classList.add('circle','selectable');
-            circle2.id ='circle2';
-            circle2.innerText='';
-            circle2.setAttribute('onclick',"fillcircle(circle2.id);");
-            var circle3 = document.createElement('button');
-            circle3.classList.add('circle','selectable');
-            circle3.id ='circle3';
-            circle3.innerText='';
-            circle3.setAttribute('onclick',"fillcircle(circle3.id);");
-            var circle4 = document.createElement('button');
-            circle4.classList.add('circle','selectable');
-            circle4.id ='circle4';
-            circle4.innerText='';
-            circle4.setAttribute('onclick',"fillcircle(circle4.id);");
-            divcircle.append(circle1,circle2,circle3,circle4);
-            tr1.append(divcircle); 
-
-           
-           
-           
-
-            var tr2 = document.createElement('tr');            
-            var divcolor = document.createElement('div');
-            divcolor.id = 'colorcontainer';
-            var color1 = createcolor('red');
-            var color2 = createcolor('green');
-            var color3 = createcolor('lightskyblue');
-            var color4 = createcolor('purple');
-            var color5 = createcolor('lightgreen');
-            var color6 = createcolor('orangered');   
-             color1.setAttribute('onclick',"fillcolor('red');");
-             color2.setAttribute('onclick',"fillcolor('green');");
-             color3.setAttribute('onclick',"fillcolor('lightskyblue');");
-             color4.setAttribute('onclick',"fillcolor('purple');");
-             color5.setAttribute('onclick',"fillcolor('lightgreen');");
-             color6.setAttribute('onclick',"fillcolor('orangered');");       
-            
-            divcolor.append(color1,color2,color3,color4,color5,color6);
-            tr2.append(divcolor); 
-
-            var tr3 = document.createElement('tr'); 
-            tr3.setAttribute('style','text-align:center;')
-            var button = document.createElement('button');
-            button.setAttribute('style','height:20px;width:70px;font-size:30px;border: none;color:white; background-color:#FF6347; font-size: 8px;border-radius:10px')
-            button.setAttribute('onclick','check()');
-            button.innerText='Check'; 
-            tr3.append(button);
-
-            tbody.append(tr1,tr2,tr3);
-
-            table.append(thead,tbody);
-            levelcontainer.appendChild(table);
-
-            div3.append(navBar,levelcontainer);
-            
-           
-            let oldDiv = document.getElementsByClassName('level')[0];
-            div2.parentNode.replaceChild(div3, oldDiv);
-            div3.onload=fixcolorcircle();
-            //sampleStopFunction();
-        }
-
-        function createcolor(bgcolor)
-        {
+        function createcolor(bgcolor) {
             var button = document.createElement('button');
             button.classList.add('color');
-           // button.setAttribute('onclick',"fillcolor(bgcolor)");
-            //button.onclick = color(bgcolor);            
-            button.innerText='';
+            button.innerText = '';
             button.style.backgroundColor = bgcolor;
             return button;
-            
         }
 
-        var maxscore=['5','10','15','20','25','30','35','40','45','50'];
-        
-        function checkscore(level,score)
-        {         
-            
-            var j=0;
-            for(var i=1;i<=level;i++)
-            {
-                totalscore = maxscore[j]*4;
-                return (score*maxscore[j])+'/'+totalscore;
-                j++;
+        var maxscore = ['20', '40', '60', '80', '100', '120', '140', '160', '180'];
 
-            }      
+        function checkscore(level, status) {
+           
+            if(status == 0)
+              return (parseInt(maxscore[level])-20 + '/' + maxscore[level]);
+            else
+              return (maxscore[level] + '/' + maxscore[level]);
         }
+
 
         var clickedcolor;
-        function fillcolor(bgcolor)
-        {
-            clickedcolor=bgcolor;
+        function fillcolor(bgcolor) {
+            clickedcolor = bgcolor;
             changecolor(clickedcolor);
-            //var currentMode = document.querySelector(".selected");
-            //var clickedone = document.getElementsByClassName('circle');
-           // document.getElementById("circle1").addEventListener('click',changecolor(),false);
-            //    document.getElementById("circle2").addEventListener('click',changecolor(),false);
-            //    document.getElementById("circle3").addEventListener('click',changecolor(),false);
-            //    document.getElementById("circle4").addEventListener('click',changecolor(),false);
-            
         }
-
 
         var newclickcolor = {};
-        var circle_id ;
-        function fillcircle(circleid)
-        {
-            /*var circles = document.getElementById(circleid).values;
-           // clickedcolor= document.querySelector(".color")[0];
-
-            for(var i = 0; i < circles.length; i++) {
-                
-                    var pickedcolor = JSON.parse(localStorage.getItem("selectedcolor")); 
-                    if(Object.values(pickedcolor).includes(clickedcolor)) {
-                    circles[i].style.backgroundColor = clickedcolor;
-                        
-                    } else {
-                        //Show user he/she got it wrong
-                        
-                       
-                    }
-                
-            }*/
+        var circle_id;
+        function fillcircle(circleid) {
             circle_id = circleid;
-
             key = circleid;
-            //newclickcolor[key] ="";
-
         }
-        
 
-        function changecolor(clickedcolor)
-        {
+        function changecolor(clickedcolor) {
             newclickcolor[circle_id] = clickedcolor;
             circle = document.getElementById(circle_id);
-            circle.style.backgroundColor =clickedcolor;
-            
-            
+            circle.style.backgroundColor = clickedcolor;
         }
 
-        
-     
 
-    </script>   
-  
+
+    </script>
+
 </body>
+
 </html>
 
